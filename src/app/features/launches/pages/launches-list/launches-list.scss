@@ -1,3 +1,6 @@
+@use "variables" as v;
+@use "mixins" as m;
+
 .container-launches {
   padding: 24px;
   max-width: 1200px;
@@ -6,7 +9,7 @@
 
 .title {
   margin-bottom: 24px;
-  color: #1e293b;
+  color: v.$text-heading;
 }
 
 .search-field {
@@ -24,12 +27,14 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 
-.launch-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: v.$card-shadow;
+  }
 }
 
 .card-content {
@@ -40,14 +45,14 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #64748b;
+  color: v.$text-muted;
   font-size: 14px;
-}
 
-.date-text mat-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .card-actions {
@@ -57,25 +62,14 @@
   padding: 8px 16px;
 }
 
-
-.status-success {
-  background-color: #e2fbe8;
-  color: #1e7e34;
-}
-
-.status-error {
-  background-color: #fde8e8;
-  color: #c82333;
-}
-
 .mission-link {
   color: inherit;
   text-decoration: none;
-}
 
-.mission-link:hover,
-.mission-link:focus-visible {
-  text-decoration: underline;
+  &:hover,
+  &:focus-visible {
+    text-decoration: underline;
+  }
 }
 
 .launches-status {
@@ -84,9 +78,11 @@
   align-items: center;
   gap: 8px;
   padding: 48px 0;
-  color: #64748b;
+  color: v.$text-muted;
+
+  &--error {
+    color: v.$error-text;
+  }
 }
 
-.launches-status--error {
-  color: #c82333;
-}
+@include m.status-chip;

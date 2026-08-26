@@ -1,3 +1,6 @@
+@use "variables" as v;
+@use "mixins" as m;
+
 .container-details {
   padding: 24px;
   max-width: 800px;
@@ -27,24 +30,24 @@
   grid-template-columns: max-content 1fr;
   gap: 8px 24px;
   margin: 24px 0;
-}
 
-.details-grid dt {
-  color: #64748b;
-  font-size: 14px;
-}
+  dt {
+    color: v.$text-muted;
+    font-size: 14px;
+  }
 
-.details-grid dd {
-  margin: 0;
+  dd {
+    margin: 0;
+  }
 }
 
 .details-text {
   line-height: 1.6;
-}
 
-.details-text--empty {
-  color: #64748b;
-  font-style: italic;
+  &--empty {
+    color: v.$text-muted;
+    font-style: italic;
+  }
 }
 
 .details-actions {
@@ -57,15 +60,7 @@
   display: flex;
   justify-content: center;
   padding: 48px 0;
-  color: #64748b;
+  color: v.$text-muted;
 }
 
-.status-success {
-  background-color: #e2fbe8;
-  color: #1e7e34;
-}
-
-.status-error {
-  background-color: #fde8e8;
-  color: #c82333;
-}
+@include m.status-chip;
