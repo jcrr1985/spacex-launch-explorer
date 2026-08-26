@@ -58,9 +58,16 @@
 
 .details-status {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
   padding: 48px 0;
   color: v.$text-muted;
+}
+
+// it is a real h1 for the outline, the user agent margin has to go
+.mission-title {
+  margin: 0;
 }
 
 @include m.status-chip;

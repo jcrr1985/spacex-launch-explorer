@@ -5,14 +5,14 @@
       [src]="launch().links.mission_patch_small"
       [alt]="launch().mission_name + ' mission patch'"
     />
-    <mat-card-title>
+    <h2 mat-card-title class="mission-title">
       <a
         class="mission-link"
         [routerLink]="['/launch', launch().flight_number]"
       >
         {{ launch().mission_name }}
       </a>
-    </mat-card-title>
+    </h2>
     <mat-card-subtitle>Flight n°{{ launch().flight_number }}</mat-card-subtitle>
   </mat-card-header>
 

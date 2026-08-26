@@ -1,6 +1,8 @@
 // colors shared by the launch pages
 $text-heading: #1e293b;
-$text-muted: #64748b;
+// slate 600, not 500: on the material surface the lighter one only reaches
+// 4.31:1 and WCAG AA asks for 4.5
+$text-muted: #475569;
 
 $success-bg: #e2fbe8;
 $success-text: #1e7e34;

@@ -46,6 +46,11 @@
   padding: 8px 16px;
 }
 
+// it is a real h2 for the outline, the user agent margin has to go
+.mission-title {
+  margin: 0;
+}
+
 .mission-link {
   color: inherit;
   text-decoration: none;

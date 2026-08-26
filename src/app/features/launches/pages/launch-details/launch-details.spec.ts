@@ -70,6 +70,6 @@ describe("LaunchDetails", () => {
     await fixture.whenStable();
 
     expect(component.launch()).toBeUndefined();
-    expect(fixture.nativeElement.textContent).toContain("No launch found");
+    expect(fixture.nativeElement.textContent).toContain("Launch not found");
   });
 });

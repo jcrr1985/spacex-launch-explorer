@@ -37,3 +37,17 @@ body {
   height: 100%;
 }
 /* You can add global styles to this file, and also import other style files */
+
+// text only screen readers read out, for live regions that would otherwise
+// have nothing visible to announce
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

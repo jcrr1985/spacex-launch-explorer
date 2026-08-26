@@ -14,7 +14,7 @@
         [alt]="launch.mission_name + ' mission patch'"
       />
       }
-      <mat-card-title>{{ launch.mission_name }}</mat-card-title>
+      <h1 mat-card-title class="mission-title">{{ launch.mission_name }}</h1>
       <mat-card-subtitle>
         Flight n°{{ launch.flight_number }} - {{ launch.launch_year }}
       </mat-card-subtitle>
@@ -96,12 +96,13 @@
     </mat-card-actions>
   </mat-card>
   } @else if (loading()) {
-  <div class="details-status">
-    <mat-spinner diameter="40" />
+  <div class="details-status" role="status">
+    <mat-spinner diameter="40" aria-label="Loading the launch" />
   </div>
   } @else {
-  <div class="details-status">
-    <p>No launch found for flight n°{{ id() }}.</p>
+  <div class="details-status" role="alert">
+    <h1 class="mission-title">Launch not found</h1>
+    <p>Nothing matches flight n°{{ id() }}.</p>
   </div>
   }
 </div>
