@@ -13,6 +13,18 @@
 
 .details-header {
   position: relative;
+  align-items: center;
+  gap: 16px;
+  padding-right: 48px;
+}
+
+// keeps mat-card-avatar so material still places it first in the header,
+// only the size and the round crop are ours
+.mission-patch.mission-patch {
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  object-fit: contain;
 }
 
 .favorite-button {
@@ -28,8 +40,13 @@
 .details-grid {
   display: grid;
   grid-template-columns: max-content 1fr;
-  gap: 8px 24px;
+  gap: 12px 32px;
   margin: 24px 0;
+  // stack the labels once there is no room for two columns
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
 
   dt {
     color: v.$text-muted;
@@ -38,6 +55,17 @@
 
   dd {
     margin: 0;
+  }
+
+  // a hairline between rows so the pairs read as a table
+  dd:not(:last-of-type) {
+    padding-bottom: 12px;
+    border-bottom: 1px solid v.$hairline;
+  }
+
+  dt:not(:last-of-type) {
+    padding-bottom: 12px;
+    border-bottom: 1px solid v.$hairline;
   }
 }
 

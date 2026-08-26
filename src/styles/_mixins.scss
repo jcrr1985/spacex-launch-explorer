@@ -1,14 +1,20 @@
 @use "variables" as v;
 
-// success / failure chip, used by the list and the details page
+// success / failure chip, used by the list and the details page.
+//
+// setting background-color here does nothing: material's own
+// .mat-mdc-standard-chip rule has the same specificity and comes later, so it
+// wins. Its colour reads from these custom properties, so that is what we set.
 @mixin status-chip {
   .status-success {
-    background-color: v.$success-bg;
-    color: v.$success-text;
+    --mat-chip-elevated-container-color: #{v.$success-bg};
+    --mat-chip-label-text-color: #{v.$success-text};
+    --mat-chip-outline-color: #{v.$success-text};
   }
 
   .status-error {
-    background-color: v.$error-bg;
-    color: v.$error-text;
+    --mat-chip-elevated-container-color: #{v.$error-bg};
+    --mat-chip-label-text-color: #{v.$error-text};
+    --mat-chip-outline-color: #{v.$error-text};
   }
 }
