@@ -1,36 +1,43 @@
-import { Launch } from "@/app/core/models/launch.model";
-import { loadLaunches } from "@/app/features/launches/state/launch.actions";
-
-import { selectAllLaunches } from "@/app/features/launches/state/launch.selectors";
-import { CommonModule, DatePipe } from "@angular/common";
-import { Component, computed, inject, signal } from "@angular/core";
+import {
+  loadLaunches,
+  toggleFavorite,
+} from "@/app/features/launches/state/launch.actions";
+import {
+  selectAllLaunches,
+  selectError,
+  selectFavoriteIds,
+  selectIsLoading,
+} from "@/app/features/launches/state/launch.selectors";
+import { DatePipe } from "@angular/common";
+import { Component, computed, inject, OnInit, signal } from "@angular/core";
 import { toSignal } from "@angular/core/rxjs-interop";
-import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { RouterLink } from "@angular/router";
 import { Store } from "@ngrx/store";
 
 @Component({
   selector: "app-launches-list",
   imports: [
-    CommonModule,
     DatePipe,
-    FormsModule,
+    RouterLink,
     MatButtonModule,
     MatCardModule,
     MatChipsModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatProgressSpinnerModule,
   ],
   templateUrl: "./launches-list.html",
   styleUrl: "./launches-list.scss",
 })
-export class LaunchList {
+export class LaunchList implements OnInit {
   private store = inject(Store);
 
   query = signal("");
@@ -38,12 +45,32 @@ export class LaunchList {
   private allLaunches = toSignal(this.store.select(selectAllLaunches), {
     requireSync: true,
   });
+  private favoriteIds = toSignal(this.store.select(selectFavoriteIds), {
+    requireSync: true,
+  });
+
+  error = toSignal(this.store.select(selectError), { requireSync: true });
+
+  private loading = toSignal(this.store.select(selectIsLoading), {
+    requireSync: true,
+  });
+
+  // only on the first load, otherwise coming back from the details page
+  // hides the list behind a spinner for a moment
+  showSpinner = computed(
+    () => this.loading() && this.allLaunches().length === 0,
+  );
 
   filteredLaunches = computed(() => {
     const query = this.query().toLowerCase();
-    return this.allLaunches().filter((launch: Launch) =>
-      launch.mission_name.toLowerCase().includes(query),
-    );
+    const favorites = new Set(this.favoriteIds());
+
+    return this.allLaunches()
+      .filter((launch) => launch.mission_name.toLowerCase().includes(query))
+      .map((launch) => ({
+        ...launch,
+        isFavorite: favorites.has(launch.flight_number),
+      }));
   });
 
   ngOnInit(): void {
@@ -52,5 +79,9 @@ export class LaunchList {
 
   onSearchChange(value: string): void {
     this.query.set(value);
+  }
+
+  onToggleFavorite(flightNumber: number): void {
+    this.store.dispatch(toggleFavorite({ flightNumber }));
   }
 }

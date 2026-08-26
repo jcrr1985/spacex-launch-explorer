@@ -67,3 +67,26 @@
   background-color: #fde8e8;
   color: #c82333;
 }
+
+.mission-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.mission-link:hover,
+.mission-link:focus-visible {
+  text-decoration: underline;
+}
+
+.launches-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 48px 0;
+  color: #64748b;
+}
+
+.launches-status--error {
+  color: #c82333;
+}

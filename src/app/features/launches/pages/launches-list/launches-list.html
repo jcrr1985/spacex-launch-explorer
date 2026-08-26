@@ -12,26 +12,42 @@
     <mat-icon matSuffix>search</mat-icon>
   </mat-form-field>
 
+  @if (showSpinner()) {
+  <div class="launches-status">
+    <mat-spinner diameter="40" />
+  </div>
+  } @else if (error(); as error) {
+  <div class="launches-status launches-status--error">
+    <mat-icon>error_outline</mat-icon>
+    <p>{{ error }}</p>
+  </div>
+  } @else {
   <div class="launches-grid">
-    @for(launch of filteredLaunches() ; track launch.flight_number){
-
+    @for (launch of filteredLaunches(); track launch.flight_number) {
     <mat-card class="launch-card">
       <mat-card-header>
         <img
           mat-card-avatar
-          [src]="launch.links?.mission_patch_small"
-          alt="Mission's patch"
+          [src]="launch.links.mission_patch_small"
+          [alt]="launch.mission_name + ' mission patch'"
         />
-        <mat-card-title>{{ launch.mission_name }}</mat-card-title>
-        <mat-card-subtitle
-          >Flight n°{{ launch.flight_number }}</mat-card-subtitle
-        >
+        <mat-card-title>
+          <a
+            class="mission-link"
+            [routerLink]="['/launch', launch.flight_number]"
+          >
+            {{ launch.mission_name }}
+          </a>
+        </mat-card-title>
+        <mat-card-subtitle>
+          Flight n°{{ launch.flight_number }}
+        </mat-card-subtitle>
       </mat-card-header>
 
       <mat-card-content class="card-content">
         <p class="date-text">
           <mat-icon>calendar_today</mat-icon>
-          {{ launch.launch_date_local | date:'dd/MM/yyyy' }}
+          {{ launch.launch_date_local | date: "dd/MM/yyyy" }}
         </p>
       </mat-card-content>
 
@@ -41,14 +57,27 @@
             [class.status-success]="launch.launch_success"
             [class.status-error]="launch.launch_success === false"
           >
-            {{ launch.launch_success ? 'Success' : 'Failure' }}
+            {{ launch.launch_success ? "Success" : "Failure" }}
           </mat-chip>
         </mat-chip-set>
+
+        <button
+          mat-icon-button
+          [attr.aria-label]="
+                launch.isFavorite
+                  ? 'Remove ' + launch.mission_name + ' from favorites'
+                  : 'Add ' + launch.mission_name + ' to favorites'
+              "
+          [attr.aria-pressed]="launch.isFavorite"
+          (click)="onToggleFavorite(launch.flight_number)"
+        >
+          <mat-icon>{{ launch.isFavorite ? "star" : "star_border" }}</mat-icon>
+        </button>
       </mat-card-actions>
     </mat-card>
-
     } @empty {
     <p>No launches found</p>
     }
   </div>
+  }
 </div>
