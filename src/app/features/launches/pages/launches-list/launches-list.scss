@@ -1,5 +1,4 @@
 @use "variables" as v;
-@use "mixins" as m;
 
 .container-launches {
   padding: 24px;
@@ -23,55 +22,6 @@
   gap: 24px;
 }
 
-.launch-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition:
-    transform 0.2s,
-    box-shadow 0.2s;
-
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: v.$card-shadow;
-  }
-}
-
-.card-content {
-  padding-top: 16px;
-}
-
-.date-text {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: v.$text-muted;
-  font-size: 14px;
-
-  mat-icon {
-    font-size: 18px;
-    width: 18px;
-    height: 18px;
-  }
-}
-
-.card-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px 16px;
-}
-
-.mission-link {
-  color: inherit;
-  text-decoration: none;
-
-  &:hover,
-  &:focus-visible {
-    text-decoration: underline;
-  }
-}
-
 .launches-status {
   display: flex;
   justify-content: center;
@@ -84,5 +34,3 @@
     color: v.$error-text;
   }
 }
-
-@include m.status-chip;

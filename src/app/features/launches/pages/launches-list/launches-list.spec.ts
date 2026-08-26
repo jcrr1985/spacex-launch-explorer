@@ -3,7 +3,10 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { provideRouter } from "@angular/router";
 import { provideStore, Store } from "@ngrx/store";
 
-import { loadLaunchesSuccess } from "../../state/launch.actions";
+import {
+  loadLaunchesFailure,
+  loadLaunchesSuccess,
+} from "../../state/launch.actions";
 import { launchReducer } from "../../state/launch.reducer";
 import { LaunchList } from "./launches-list";
 
@@ -46,7 +49,7 @@ describe("LaunchList", () => {
     await fixture.whenStable();
 
     expect(component.filteredLaunches().length).toBe(1);
-    expect(component.filteredLaunches()[0].mission_name).toBe("DemoSat");
+    expect(component.filteredLaunches()[0].launch.mission_name).toBe("DemoSat");
   });
 
   it("renders the empty block when nothing matches", async () => {
@@ -66,5 +69,36 @@ describe("LaunchList", () => {
       type: "[Launch] Toggle Favorite",
       flightNumber: 2,
     });
+  });
+});
+
+describe("LaunchList before any data arrives", () => {
+  let fixture: ComponentFixture<LaunchList>;
+  let store: Store;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [provideStore({ launch: launchReducer }), provideRouter([])],
+    });
+
+    store = TestBed.inject(Store);
+    fixture = TestBed.createComponent(LaunchList);
+  });
+
+  it("shows a spinner while the first load is in flight", async () => {
+    await fixture.whenStable();
+
+    expect(fixture.componentInstance.showSpinner()).toBe(true);
+    expect(fixture.nativeElement.querySelector("mat-spinner")).toBeTruthy();
+  });
+
+  it("shows the message when the load fails", async () => {
+    await fixture.whenStable();
+
+    store.dispatch(loadLaunchesFailure({ error: "network down" }));
+    await fixture.whenStable();
+
+    expect(fixture.nativeElement.querySelector("mat-spinner")).toBeNull();
+    expect(fixture.nativeElement.textContent).toContain("network down");
   });
 });

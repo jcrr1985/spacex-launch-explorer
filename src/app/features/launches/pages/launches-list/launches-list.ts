@@ -1,3 +1,4 @@
+import { LaunchCard } from "@/app/features/launches/components/launch-card/launch-card";
 import {
   loadLaunches,
   toggleFavorite,
@@ -8,27 +9,25 @@ import {
   selectFavoriteIds,
   selectIsLoading,
 } from "@/app/features/launches/state/launch.selectors";
-import { DatePipe } from "@angular/common";
-import { Component, computed, inject, OnInit, signal } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+} from "@angular/core";
 import { toSignal } from "@angular/core/rxjs-interop";
-import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
-import { MatChipsModule } from "@angular/material/chips";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
-import { RouterLink } from "@angular/router";
 import { Store } from "@ngrx/store";
 
 @Component({
   selector: "app-launches-list",
   imports: [
-    DatePipe,
-    RouterLink,
-    MatButtonModule,
-    MatCardModule,
-    MatChipsModule,
+    LaunchCard,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -36,6 +35,7 @@ import { Store } from "@ngrx/store";
   ],
   templateUrl: "./launches-list.html",
   styleUrl: "./launches-list.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LaunchList implements OnInit {
   private store = inject(Store);
@@ -68,7 +68,7 @@ export class LaunchList implements OnInit {
     return this.allLaunches()
       .filter((launch) => launch.mission_name.toLowerCase().includes(query))
       .map((launch) => ({
-        ...launch,
+        launch,
         isFavorite: favorites.has(launch.flight_number),
       }));
   });

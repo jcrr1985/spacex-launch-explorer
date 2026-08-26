@@ -1,0 +1,49 @@
+<mat-card class="launch-card">
+  <mat-card-header>
+    <img
+      mat-card-avatar
+      [src]="launch().links.mission_patch_small"
+      [alt]="launch().mission_name + ' mission patch'"
+    />
+    <mat-card-title>
+      <a
+        class="mission-link"
+        [routerLink]="['/launch', launch().flight_number]"
+      >
+        {{ launch().mission_name }}
+      </a>
+    </mat-card-title>
+    <mat-card-subtitle>Flight n°{{ launch().flight_number }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content class="card-content">
+    <p class="date-text">
+      <mat-icon>calendar_today</mat-icon>
+      {{ launch().launch_date_local | date: "dd/MM/yyyy" }}
+    </p>
+  </mat-card-content>
+
+  <mat-card-actions class="card-actions">
+    <mat-chip-set>
+      <mat-chip
+        [class.status-success]="launch().launch_success"
+        [class.status-error]="launch().launch_success === false"
+      >
+        {{ launch().launch_success ? "Success" : "Failure" }}
+      </mat-chip>
+    </mat-chip-set>
+
+    <button
+      mat-icon-button
+      [attr.aria-label]="
+        isFavorite()
+          ? 'Remove ' + launch().mission_name + ' from favorites'
+          : 'Add ' + launch().mission_name + ' to favorites'
+      "
+      [attr.aria-pressed]="isFavorite()"
+      (click)="toggleFavorite.emit(launch().flight_number)"
+    >
+      <mat-icon>{{ isFavorite() ? "star" : "star_border" }}</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
