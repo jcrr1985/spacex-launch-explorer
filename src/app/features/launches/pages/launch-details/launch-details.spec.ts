@@ -49,6 +49,22 @@ describe("LaunchDetails", () => {
     );
   });
 
+  it("toggles the favorite from the star button", async () => {
+    const star = fixture.nativeElement.querySelector(
+      ".favorite-button",
+    ) as HTMLButtonElement;
+    expect(component.isFavorite()).toBe(false);
+
+    star.click();
+    await fixture.whenStable();
+    expect(component.isFavorite()).toBe(true);
+    expect(star.getAttribute("aria-label")).toBe("Remove from favorites");
+
+    star.click();
+    await fixture.whenStable();
+    expect(component.isFavorite()).toBe(false);
+  });
+
   it("reports a not found state for an unknown flight number", async () => {
     fixture.componentRef.setInput("id", "999");
     await fixture.whenStable();

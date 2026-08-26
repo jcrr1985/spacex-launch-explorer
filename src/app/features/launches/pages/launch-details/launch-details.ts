@@ -8,7 +8,13 @@ import {
   selectIsLoading,
 } from "@/app/features/launches/state/launch.selectors";
 import { DatePipe } from "@angular/common";
-import { Component, computed, inject, input } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  input,
+} from "@angular/core";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
@@ -31,6 +37,7 @@ import { Store } from "@ngrx/store";
   ],
   templateUrl: "./launch-details.html",
   styleUrl: "./launch-details.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LaunchDetails {
   private store = inject(Store);
