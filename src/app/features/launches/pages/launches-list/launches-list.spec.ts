@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { LaunchList } from './launches-list';
+import { LaunchList } from "./launches-list";
 
-describe('LaunchesList', () => {
+describe("LaunchesList", () => {
   let component: LaunchList;
   let fixture: ComponentFixture<LaunchList>;
 
@@ -16,7 +16,7 @@ describe('LaunchesList', () => {
     await fixture.whenStable();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

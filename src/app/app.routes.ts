@@ -1,10 +1,10 @@
-import { Routes } from '@angular/router';
+import { Routes } from "@angular/router";
 
 export const routes: Routes = [
   {
-    path: '',
+    path: "",
     loadChildren: () =>
-      import('@/app/features/launches/launches.routes').then(
+      import("@/app/features/launches/launches.routes").then(
         (m) => m.LAUNCHES_ROUTES,
       ),
   },
