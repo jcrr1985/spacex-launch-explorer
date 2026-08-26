@@ -1,23 +1,32 @@
-import { createReducer, on } from '@ngrx/store';
-import * as LaunchActions from './launch.actions';
+import { Launch } from "@/app/core/models/launch.model";
+import { createReducer, on } from "@ngrx/store";
+import * as LaunchActions from "./launch.actions";
 
 export interface LaunchState {
-  launches: any[];
-  favoriteIds: string[];
+  launches: Launch[];
+  favoriteIds: number[];
   loading: boolean;
-  error: any;
+  error: string | null;
 }
 
 export const initialState: LaunchState = {
   launches: [],
   favoriteIds: [],
   loading: false,
-  error: null
+  error: null,
 };
 
 export const launchReducer = createReducer(
   initialState,
-  on(LaunchActions.loadLaunches, state => ({ ...state, loading: true })),
-  on(LaunchActions.loadLaunchesSuccess, (state, { launches }) => ({ ...state, loading: false, launches })),
-  on(LaunchActions.loadLaunchesFailure, (state, { error }) => ({ ...state, loading: false, error })),
+  on(LaunchActions.loadLaunches, (state) => ({ ...state, loading: true })),
+  on(LaunchActions.loadLaunchesSuccess, (state, { launches }) => ({
+    ...state,
+    loading: false,
+    launches,
+  })),
+  on(LaunchActions.loadLaunchesFailure, (state, { error }) => ({
+    ...state,
+    loading: false,
+    error,
+  })),
 );
