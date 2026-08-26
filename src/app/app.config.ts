@@ -6,8 +6,8 @@ import { provideStore } from '@ngrx/store';
 import { provideEffects } from '@ngrx/effects';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 
-import { launchReducer } from './state/launch.reducer';
-import { LaunchEffects } from './state/launch.effects';
+import { launchReducer } from '@/app/features/launches/state/launch.reducer';
+import { LaunchEffects } from '@/app/features/launches/state/launch.effects';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {

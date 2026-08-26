@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SpacexService } from '../../services/spacex';
+import { SpacexService } from '@/app/core/services/spacex.service';
 import { Subscription } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -17,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
   imports: [CommonModule, FormsModule, MatCardModule, MatFormFieldModule, MatInputModule, MatIconModule, MatChipsModule, MatButtonModule],
   templateUrl: './launches-list.html'
 })
-export class LaunchesListComponent implements OnInit {
+export class LaunchList implements OnInit {
   allLaunches: any[] = [];
   filteredLaunches: any[] = [];
   searchTerm: string = '';
