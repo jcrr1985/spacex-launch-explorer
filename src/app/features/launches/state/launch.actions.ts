@@ -1,8 +1,4 @@
-import { createAction, createActionGroup, props } from '@ngrx/store';
-
-const x:createActionGroup = createActionGroup({
-
-})
+import { createAction, props } from '@ngrx/store';
 
 export const loadLaunches = createAction('[Launch List] Load Launches');
 export const loadLaunchesSuccess = createAction('[Launch List] Load Success', props<{ launches: any[] }>());
