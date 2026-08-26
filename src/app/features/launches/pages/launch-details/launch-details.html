@@ -1,1 +1,107 @@
-<p>launch-details works!</p>
+<div class="container-details">
+  <a mat-button routerLink="/" class="back-link">
+    <mat-icon>arrow_back</mat-icon>
+    Back to launches
+  </a>
+
+  @if (launch(); as launch) {
+  <mat-card class="details-card">
+    <mat-card-header class="details-header">
+      @if (launch.links.mission_patch) {
+      <img
+        mat-card-avatar
+        [src]="launch.links.mission_patch"
+        [alt]="launch.mission_name + ' mission patch'"
+      />
+      }
+      <mat-card-title>{{ launch.mission_name }}</mat-card-title>
+      <mat-card-subtitle>
+        Flight n°{{ launch.flight_number }} - {{ launch.launch_year }}
+      </mat-card-subtitle>
+
+      <button
+        mat-icon-button
+        class="favorite-button"
+        [attr.aria-label]="
+            isFavorite() ? 'Remove from favorites' : 'Add to favorites'
+          "
+        [attr.aria-pressed]="isFavorite()"
+        (click)="onToggleFavorite()"
+      >
+        <mat-icon>{{ isFavorite() ? "star" : "star_border" }}</mat-icon>
+      </button>
+    </mat-card-header>
+
+    <mat-card-content class="details-content">
+      <mat-chip-set>
+        <mat-chip
+          [class.status-success]="launch.launch_success"
+          [class.status-error]="launch.launch_success === false"
+        >
+          {{ launch.launch_success ? "Success" : "Failure" }}
+        </mat-chip>
+      </mat-chip-set>
+
+      <dl class="details-grid">
+        <dt>Launch date</dt>
+        <dd>{{ launch.launch_date_local | date: "dd/MM/yyyy HH:mm" }}</dd>
+
+        <dt>Rocket</dt>
+        <dd>
+          {{ launch.rocket.rocket_name }} ({{ launch.rocket.rocket_type }})
+        </dd>
+
+        <dt>Launch site</dt>
+        <dd>{{ launch.launch_site.site_name_long }}</dd>
+      </dl>
+
+      @if (launch.details) {
+      <p class="details-text">{{ launch.details }}</p>
+      } @else {
+      <p class="details-text details-text--empty">
+        No mission description available.
+      </p>
+      }
+    </mat-card-content>
+
+    <mat-card-actions class="details-actions">
+      @if (launch.links.article_link) {
+      <a
+        mat-button
+        [href]="launch.links.article_link"
+        target="_blank"
+        rel="noopener"
+      >
+        Article
+      </a>
+      } @if (launch.links.wikipedia) {
+      <a
+        mat-button
+        [href]="launch.links.wikipedia"
+        target="_blank"
+        rel="noopener"
+      >
+        Wikipedia
+      </a>
+      } @if (launch.links.video_link) {
+      <a
+        mat-button
+        [href]="launch.links.video_link"
+        target="_blank"
+        rel="noopener"
+      >
+        Watch
+      </a>
+      }
+    </mat-card-actions>
+  </mat-card>
+  } @else if (loading()) {
+  <div class="details-status">
+    <mat-spinner diameter="40" />
+  </div>
+  } @else {
+  <div class="details-status">
+    <p>No launch found for flight n°{{ id() }}.</p>
+  </div>
+  }
+</div>
