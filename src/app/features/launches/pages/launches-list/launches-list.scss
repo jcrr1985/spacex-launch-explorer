@@ -18,7 +18,9 @@
 
 .launches-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  // min() so the track can drop below 300px instead of overflowing on a
+  // 320px phone
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
   gap: 24px;
 }
 
